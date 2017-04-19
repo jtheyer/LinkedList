@@ -3,21 +3,19 @@ package linkedList;
 /**
  * Represents a single link object.
  *
- * @author J
+ * @author Jason
  */
 public class Link {
 
-    public int index;
-    public double data; // can replace this with any kind of object
+    public Friend data; // can replace this with any kind of object
     public Link next;
 
-    public Link(int index, double data) {
-        this.index = index;
+    public Link(Friend data) {
         this.data = data;
         this.next = null;
     }
 
     public String toString() {
-        return index + ", " + data;
+        return data.toString();
     }
 }

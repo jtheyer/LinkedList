@@ -2,11 +2,12 @@ package linkedList;
 
 /**
  *
- * @author 55jphillip
+ * @author Jason
  */
 public class LinkedList {
 
     private Link first;
+    public int length;
 
     public LinkedList() {
         first = null;
@@ -16,21 +17,34 @@ public class LinkedList {
         return (first == null);
     }
 
-    public void insertFirst(int index, double data) {
-        Link newLink = new Link(index, data);
+    public void push(Friend data) {
+        Link newLink = new Link(data);
         newLink.next = first;
         first = newLink;
+        length++;
     }
 
-    public Link deleteFirst() {
-        Link temp = first;
-        first = first.next;
-        return temp;
+    public Link pop() {
+        if (length > 0) {
+            Link temp = first;
+            first = first.next;
+            length--;
+            return temp;
+        }
+        return null;
     }
 
-    public Link find(int key) {
+    public Link peek() {
+        return first;
+    }
+
+    public Link remove(){
+        return null; //doesnt work yet
+    }
+    
+    public Link find(String key) {
         Link current = first;
-        while (current.index != key) {
+        while (current.data.getName() != key) {
             if (current.next == null) {
                 return null;
             } else {
@@ -40,25 +54,29 @@ public class LinkedList {
         return current;
     }
 
-    public Link delete(int key) {
+    public Link delete(int index) {
         Link current = first;
         Link previous = first;
 
-        while (current.index != key) {
-            if (current.next == null) {
-                return null;
-            } else {
-                previous = current;
-                current = current.next;
+        if (!isEmpty()) {
+            int count = 0;
+            while (count != index) {
+                if (current.next == null) {
+                    return null;
+                } else {
+                    previous = current;
+                    current = current.next;
+                }
+                count++;
             }
-        }
 
-        if (current == first) {
-            first = first.next;
-        } else {
-            previous.next = current.next;
+            if (current == first) {
+                first = first.next;
+            } else {
+                previous.next = current.next;
+            }
+            length--; //fix later
         }
-
         return current;
     }
 
@@ -73,17 +91,48 @@ public class LinkedList {
         }
         return sb.toString();
     }
-    
+
     public static void main(String[] args) {
         LinkedList list = new LinkedList();
-        list.insertFirst(1, 25.1);
-        list.insertFirst(2, 39.2);
-        list.insertFirst(3, 10.3);
+        list.push(new Friend("Tom", 5));
+        list.push(new Friend("Jon", 3));
+        list.push(new Friend("Jane", 10));
         System.out.println(list);
+        System.out.println("Length of list is: "+ list.length);
         
-        System.out.println("Match for item 4: " + list.find(4));
-        
-        list.delete(2);
+        System.out.println("Peek = " + list.peek());
+
+        System.out.println("Match for item Tom: " + list.find("Tom"));
+        System.out.println("Match for item Jon: " + list.find("Jon"));
+        System.out.println("Match for item Jane: " + list.find("Jane"));
+        System.out.println("Match for item God: " + list.find("God"));
+
+        Link link = list.pop();
+        System.out.println("Pop = " + link);
         System.out.println(list);
+//
+//        if (list.delete(0) != null) {
+//            System.out.println("Item deleted\n" + list);
+//        } else {
+//            System.out.println("Null value on delete");
+//        }
+
+//        if (list.delete(0) != null) {
+//            System.out.println("Item deleted\n" + list);
+//        } else {
+//            System.out.println("Null value on delete");
+//        }
+//
+//        if (list.delete(0) != null) {
+//            System.out.println("Item deleted\n" + list);
+//        } else {
+//            System.out.println("Null value on delete");
+//        }
+//
+//        if (list.delete(0) != null) {
+//            System.out.println("Item deleted\n" + list);
+//        } else {
+//            System.out.println("Null value on delete");
+//        }
     }
 }
